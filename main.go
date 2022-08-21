@@ -5,6 +5,7 @@ import (
 	"Golang-fiber/routes"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
+	"os"
 )
 
 func main() {
@@ -13,14 +14,20 @@ func main() {
 
 	app.Use(cors.New(cors.Config{
 		AllowOrigins:     "*",
-		AllowMethods:     "GET, POST, PUT, DELETE",
+		AllowMethods:     "GET, POST, PUT, PATCH, DELETE",
 		AllowHeaders:     "Content-Type, Authorization",
 		ExposeHeaders:    "Authorization",
 		AllowCredentials: true,
 	}))
+
 	routes.Setup(app)
 
-	err := app.Listen(":8000")
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8000"
+	}
+
+	err := app.Listen(":" + port)
 	if err != nil {
 		return
 	}
