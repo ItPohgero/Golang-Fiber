@@ -12,11 +12,13 @@ func Setup(app *fiber.App) {
 		route.Post(register, controllers.Register)
 		route.Post(login, controllers.Login)
 
-		// with header authorization bearer token
 		route.Use(controllers.IsAuthorized)
 		{
 			route.Get(users, controllers.Users)
 			route.Get(user, controllers.User)
+			route.Patch(userUpdate, controllers.UserUpdate)
+			route.Delete(userDestroy, controllers.UserDestroy)
+
 		}
 	}
 }

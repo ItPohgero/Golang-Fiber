@@ -13,10 +13,8 @@ import (
 const ScretKey = "secret"
 
 func Register(c *fiber.Ctx) error {
-	// Parse body
 	var data map[string]string
 
-	// Validate data is correct or not null and length is greater than 0
 	if err := c.BodyParser(&data); err != nil {
 		c.Status(fiber.StatusBadRequest)
 		return c.JSON(
@@ -25,24 +23,20 @@ func Register(c *fiber.Ctx) error {
 			})
 	}
 
-	// create bcrypt password
 	password, _ := bcrypt.GenerateFromPassword([]byte(data["password"]), bcrypt.DefaultCost)
 	user := models.User{
 		Name:     data["name"],
 		Email:    data["email"],
 		Password: password,
 	}
-	// save user to database
-	database.DB.Create(&user)
 
+	database.DB.Create(&user)
 	return c.Status(fiber.StatusOK).JSON(user)
 }
 
 func Login(c *fiber.Ctx) error {
-	// Parse body
 	var data map[string]string
 
-	// Validate data is correct or not null and length is greater than 0
 	if err := c.BodyParser(&data); err != nil {
 		c.Status(fiber.StatusBadRequest)
 		return c.JSON(
@@ -61,7 +55,7 @@ func Login(c *fiber.Ctx) error {
 				"message": "User not found",
 			})
 	}
-	// compare password
+
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(data["password"])); err != nil {
 		c.Status(fiber.StatusUnauthorized)
 		return c.JSON(
