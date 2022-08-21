@@ -12,4 +12,14 @@ func Setup(app *fiber.App) {
 		auth.Post("/register", controllers.Register)
 		auth.Post("/login", controllers.Login)
 	}
+
+	//middleware for authentication and authorization for all routes header Authorization: Bearer <token>
+	auth.Use(controllers.IsAuthorized)
+	{
+		user := app.Group("/api/v1")
+		{
+			user.Get("/users", controllers.UserList)
+		}
+	}
+
 }
