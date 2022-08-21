@@ -48,7 +48,7 @@ func Login(c *fiber.Ctx) error {
 	var user models.User
 	database.DB.Where("email = ?", data["email"]).First(&user)
 
-	if user.Id == 0 {
+	if user.ID == 0 {
 		c.Status(fiber.StatusNotFound)
 		return c.JSON(
 			fiber.Map{
@@ -65,7 +65,7 @@ func Login(c *fiber.Ctx) error {
 	}
 
 	claims := jwt.MapClaims{
-		"id":   strconv.Itoa(int(user.Id)),
+		"id":   strconv.Itoa(int(user.ID)),
 		"user": user.Name,
 		"exp":  time.Now().Add(time.Hour * 72).Unix(),
 	}

@@ -26,7 +26,7 @@ func UserUpdate(c *fiber.Ctx) error {
 	var user models.User
 	database.DB.First(&user, id)
 
-	if user.Id == 0 {
+	if user.ID == 0 {
 		c.Status(fiber.StatusNotFound)
 		return c.JSON(
 			fiber.Map{
@@ -59,7 +59,7 @@ func UserDestroy(c *fiber.Ctx) error {
 	var user models.User
 	database.DB.First(&user, id)
 
-	if user.Id == 0 {
+	if user.ID == 0 {
 		c.Status(fiber.StatusNotFound)
 		return c.JSON(
 			fiber.Map{

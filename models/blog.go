@@ -3,7 +3,7 @@ package models
 import "time"
 
 type Blog struct {
-	Id        uint      `json:"id" validate:"required"`
+	ID        uint      `json:"id" validate:"required"`
 	UserID    uint      `json:"user_id" validate:"required"`
 	Slug      string    `json:"slug" validate:"required"`
 	Title     string    `json:"title" validate:"required"`
