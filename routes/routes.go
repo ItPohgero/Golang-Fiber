@@ -7,19 +7,15 @@ import (
 
 func Setup(app *fiber.App) {
 	app.Get("/", controllers.Welcome)
-	auth := app.Group("/api/v1")
+	route := app.Group(prefix)
 	{
-		auth.Post("/register", controllers.Register)
-		auth.Post("/login", controllers.Login)
-	}
+		route.Post(register, controllers.Register)
+		route.Post(login, controllers.Login)
 
-	//middleware for authentication and authorization for all routes header Authorization: Bearer <token>
-	auth.Use(controllers.IsAuthorized)
-	{
-		user := app.Group("/api/v1")
+		// with header authorization bearer token
+		route.Use(controllers.IsAuthorized)
 		{
-			user.Get("/users", controllers.UserList)
+			route.Get(users, controllers.Users)
 		}
 	}
-
 }

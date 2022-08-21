@@ -93,3 +93,31 @@ func Login(c *fiber.Ctx) error {
 		"token":   tokenString,
 	})
 }
+
+func IsAuthorized(c *fiber.Ctx) error {
+
+	token := c.Get("Authorization")
+	if token == "" {
+		c.Status(fiber.StatusUnauthorized)
+		return c.JSON(
+			fiber.Map{
+				"message": "Unauthorized",
+			})
+	}
+
+	tokenString := token[7:]
+	tokenClaims := jwt.MapClaims{}
+	_, err := jwt.ParseWithClaims(tokenString, tokenClaims, func(token *jwt.Token) (interface{}, error) {
+		return []byte(ScretKey), nil
+	})
+
+	if err != nil {
+		c.Status(fiber.StatusUnauthorized)
+		return c.JSON(
+			fiber.Map{
+				"message": "Unauthorized",
+			})
+	}
+
+	return c.Next()
+}
