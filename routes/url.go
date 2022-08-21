@@ -5,4 +5,5 @@ const (
 	register = "/register"
 	login    = "/login"
 	users    = "/users"
+	user     = "/user/:id"
 )

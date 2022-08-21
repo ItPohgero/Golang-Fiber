@@ -16,6 +16,7 @@ func Setup(app *fiber.App) {
 		route.Use(controllers.IsAuthorized)
 		{
 			route.Get(users, controllers.Users)
+			route.Get(user, controllers.User)
 		}
 	}
 }
