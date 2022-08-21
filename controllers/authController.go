@@ -23,6 +23,17 @@ func Register(c *fiber.Ctx) error {
 			})
 	}
 
+	// validation
+	errors := models.ValidateStruct(models.User{
+		Name:     data["name"],
+		Email:    data["email"],
+		Password: []byte(data["password"]),
+	})
+	if errors != nil {
+		return c.Status(fiber.StatusBadRequest).JSON(errors)
+
+	}
+
 	password, _ := bcrypt.GenerateFromPassword([]byte(data["password"]), bcrypt.DefaultCost)
 	user := models.User{
 		Name:     data["name"],
