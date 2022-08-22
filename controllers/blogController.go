@@ -11,10 +11,5 @@ func BlogShow(c *fiber.Ctx) error {
 	var blog models.Blog
 	database.DB.First(&blog, id)
 
-	var user models.User
-	database.DB.First(&user, blog.UserID)
-	return c.JSON(fiber.Map{
-		"user": user,
-		"blog": blog,
-	})
+	return c.JSON(blog)
 }

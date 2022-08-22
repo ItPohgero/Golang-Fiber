@@ -7,10 +7,13 @@ import (
 )
 
 func UsersList(c *fiber.Ctx) error {
-	var users []models.User
-	database.DB.Find(&users)
 
-	return c.JSON(users)
+	var users []models.User
+	database.DB.Find(&users).Preload("Blogs")
+	return c.JSON(fiber.Map{
+		"message": "Users found",
+		"data":    users,
+	})
 }
 
 func UserShow(c *fiber.Ctx) error {
@@ -22,8 +25,11 @@ func UserShow(c *fiber.Ctx) error {
 	database.DB.Find(&blogs, "user_id = ?", id)
 
 	return c.JSON(fiber.Map{
-		"user":  user,
-		"blogs": blogs,
+		"message": "User found",
+		"data": fiber.Map{
+			"user":  user,
+			"blogs": blogs,
+		},
 	})
 }
 
