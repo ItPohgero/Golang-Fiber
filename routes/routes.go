@@ -19,6 +19,8 @@ func Setup(app *fiber.App) {
 			route.Patch(userUpdate, controllers.UserUpdate)
 			route.Delete(userDestroy, controllers.UserDestroy)
 
+			route.Get(blogShow, controllers.BlogShow)
+
 		}
 	}
 }

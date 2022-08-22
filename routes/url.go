@@ -8,4 +8,5 @@ const (
 	userShow    = "/user/:id"
 	userUpdate  = "/user/update/:id"
 	userDestroy = "/user/destroy/:id"
+	blogShow    = "/blog/:id"
 )

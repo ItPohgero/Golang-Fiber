@@ -8,10 +8,10 @@ import (
 type User struct {
 	ID        uint      `json:"id" gorm:"primary_key"`
 	Name      string    `json:"name" validate:"required"`
-	Email     string    `json:"email" gorm:"unique" validate:"required,email"`
+	Email     string    `json:"email" gorm:"unique" validate:"required,email,min=6,max=32"`
 	Password  []byte    `json:"-" validate:"required"`
-	CreatedAt time.Time `gorm:"autoCreateTime:true"`
-	UpdatedAt time.Time `gorm:"autoUpdateTime:true"`
+	CreatedAt time.Time `json:"-" gorm:"autoCreateTime:true"`
+	UpdatedAt time.Time `json:"-" gorm:"autoUpdateTime:true"`
 }
 
 type ErrorResponse struct {
