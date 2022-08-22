@@ -12,4 +12,5 @@ type Blog struct {
 	CreatedAt time.Time `json:"created_at" gorm:"autoCreateTime:true"`
 	UpdatedAt time.Time `json:"updated_at" gorm:"autoUpdateTime:true"`
 	UserID    uint      `json:"user_id" validate:"required"`
+	User      *User
 }

@@ -9,7 +9,7 @@ import (
 func BlogShow(c *fiber.Ctx) error {
 	id := c.Params("id")
 	var blog models.Blog
-	database.DB.First(&blog, id)
+	database.DB.Preload("User").First(&blog, id)
 
 	return c.JSON(blog)
 }
