@@ -14,8 +14,8 @@ func Setup(app *fiber.App) {
 
 		route.Use(controllers.IsAuthorized)
 		{
-			route.Get(users, controllers.Users)
-			route.Get(user, controllers.User)
+			route.Get(usersList, controllers.UsersList)
+			route.Get(userShow, controllers.UserShow)
 			route.Patch(userUpdate, controllers.UserUpdate)
 			route.Delete(userDestroy, controllers.UserDestroy)
 
