@@ -9,7 +9,7 @@ import (
 func UsersList(c *fiber.Ctx) error {
 
 	var users []models.User
-	database.DB.Find(&users).Preload("Blogs")
+	database.DB.Preload("Blogs").Find(&users)
 	return c.JSON(fiber.Map{
 		"message": "Users found",
 		"data":    users,
