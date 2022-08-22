@@ -9,6 +9,7 @@ import (
 func UsersList(c *fiber.Ctx) error {
 
 	var users []models.User
+	//database.DB.Preload(clause.Associations).Find(&users)
 	database.DB.Preload("Blogs").Find(&users)
 	return c.JSON(fiber.Map{
 		"message": "Users found",
@@ -19,17 +20,11 @@ func UsersList(c *fiber.Ctx) error {
 func UserShow(c *fiber.Ctx) error {
 	id := c.Params("id")
 	var user models.User
-	database.DB.First(&user, id)
-
-	var blogs []models.Blog
-	database.DB.Find(&blogs, "user_id = ?", id)
+	database.DB.Preload("Blogs").First(&user, id)
 
 	return c.JSON(fiber.Map{
 		"message": "User found",
-		"data": fiber.Map{
-			"user":  user,
-			"blogs": blogs,
-		},
+		"data":    user,
 	})
 }
 

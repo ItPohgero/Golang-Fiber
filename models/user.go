@@ -12,7 +12,7 @@ type User struct {
 	Password  []byte    `json:"-" validate:"required"`
 	CreatedAt time.Time `json:"-" gorm:"autoCreateTime:true"`
 	UpdatedAt time.Time `json:"-" gorm:"autoUpdateTime:true"`
-	Blogs     []Blog    `json:"blogs" gorm:"foreignKey:ID"`
+	Blogs     []Blog    `json:"blogs" gorm:"foreignKey:UserID"`
 }
 
 type ErrorResponse struct {
