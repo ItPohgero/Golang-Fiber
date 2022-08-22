@@ -32,9 +32,18 @@ func Connect() {
 	}
 
 	if os.Getenv("DB_TYPE") == "postgres" {
-		dsn := "host=" + os.Getenv("DB_HOST") + " user=" + os.Getenv("DB_HOST") + " password=" + os.Getenv("DB_PASS") + " dbname=" + os.Getenv("DB_NAME") + " port=" + os.Getenv("DB_PORT_POSTGRES") + " sslmode=disable TimeZone=Asia/Jakarta"
-		connection, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
+		host := "localhost"
+		user := os.Getenv("DB_USER")
+		password := os.Getenv("DB_PASS")
+		dbname := os.Getenv("DB_NAME")
+		port := "5432"
+		sslmode := "disable"
+		timezone := "Asia/Jakarta"
+
+		dsn := "host=" + host + " user=" + user + " password=" + password + " dbname=" + dbname + " port=" + port + " sslmode=" + sslmode + " TimeZone=" + timezone
+
+		connection, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 		DB = connection
 		err = connection.AutoMigrate(&models.User{}, &models.Blog{})
 		if err != nil {
