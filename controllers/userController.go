@@ -18,7 +18,13 @@ func UserShow(c *fiber.Ctx) error {
 	var user models.User
 	database.DB.First(&user, id)
 
-	return c.JSON(user)
+	var blogs []models.Blog
+	database.DB.Find(&blogs, "user_id = ?", id)
+
+	return c.JSON(fiber.Map{
+		"user":  user,
+		"blogs": blogs,
+	})
 }
 
 func UserUpdate(c *fiber.Ctx) error {
