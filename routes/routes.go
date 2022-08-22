@@ -2,6 +2,7 @@ package routes
 
 import (
 	"Golang-fiber/controllers"
+	"Golang-fiber/middleware"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -12,15 +13,11 @@ func Setup(app *fiber.App) {
 		route.Post(register, controllers.Register)
 		route.Post(login, controllers.Login)
 
-		route.Use(controllers.IsAuthorized)
-		{
-			route.Get(usersList, controllers.UsersList)
-			route.Get(userShow, controllers.UserShow)
-			route.Patch(userUpdate, controllers.UserUpdate)
-			route.Delete(userDestroy, controllers.UserDestroy)
+		route.Get(usersList, middleware.Protected(), controllers.UsersList)
+		route.Get(userShow, middleware.Protected(), controllers.UserShow)
+		route.Patch(userUpdate, middleware.Protected(), controllers.UserUpdate)
+		route.Delete(userDestroy, middleware.Protected(), controllers.UserDestroy)
 
-			route.Get(blogShow, controllers.BlogShow)
-
-		}
+		route.Get(blogShow, middleware.Protected(), controllers.BlogShow)
 	}
 }
